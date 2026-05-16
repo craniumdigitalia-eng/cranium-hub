@@ -1,0 +1,577 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{background:#0d0b14;border-radius:16px;padding:18px;font-family:var(--font-sans);min-height:620px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.brand{display:flex;align-items:center;gap:9px}
+.bicon{width:34px;height:34px;border-radius:9px;background:#7c3aed;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.bname{font-size:15px;font-weight:500;color:#fff}
+.bsub{font-size:11px;color:#a78bfa}
+.nav{display:flex;gap:5px;flex-wrap:wrap}
+.ntab{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:0.5px solid #3d2d5c;color:#a78bfa;background:transparent}
+.ntab.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.ntab:hover:not(.active){background:#1a1528}
+.hidden{display:none}
+.stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:14px}
+.stat{background:#1a1528;border:0.5px solid #2d2440;border-radius:8px;padding:9px 10px}
+.sn{font-size:20px;font-weight:500;color:#c084fc}
+.sl{font-size:10px;color:#6b5a8a;margin-top:1px}
+.toolbar{display:flex;gap:7px;margin-bottom:13px;flex-wrap:wrap;align-items:center}
+.toolbar input,.toolbar select{background:#1a1528;border:0.5px solid #3d2d5c;border-radius:8px;padding:7px 10px;color:#e2d9f3;font-size:12px;outline:none}
+.toolbar input{flex:1;min-width:120px}
+.toolbar input:focus{border-color:#7c3aed}
+.toolbar input::placeholder{color:#5a4a7a}
+.btn-p{background:#7c3aed;border:none;border-radius:8px;padding:7px 13px;color:#fff;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.btn-p:hover{background:#6d28d9}
+.btn-s{background:#1a1528;border:0.5px solid #3d2d5c;border-radius:8px;padding:6px 11px;color:#a78bfa;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px}
+.btn-s:hover{background:#2d2440}
+.btn-e{background:#2d2440;border:0.5px solid #3d3060;border-radius:6px;padding:3px 8px;font-size:10px;color:#a78bfa;cursor:pointer}
+.btn-e:hover{background:#3d3450}
+.btn-d{background:#2a1a1a;border:0.5px solid #4a2020;border-radius:6px;padding:3px 8px;font-size:10px;color:#f87171;cursor:pointer}
+.btn-d:hover{background:#3a2020}
+.btn-mv{background:#2d2440;border:none;border-radius:5px;padding:3px 7px;font-size:10px;color:#a78bfa;cursor:pointer}
+.btn-mv:hover{background:#3d3450}
+.clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:9px}
+.cc{background:#120f1e;border:0.5px solid #2d2440;border-radius:12px;padding:12px}
+.cc:hover{border-color:#5b3fa0}
+.cc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.cav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500}
+.cc-acts{display:flex;gap:4px}
+.cname{font-size:13px;font-weight:500;color:#e2d9f3;margin-bottom:3px}
+.cniche{font-size:11px;color:#6b5a8a;margin-bottom:7px}
+.ctags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.ct{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:500}
+.ct-a{background:#2a1a1a;color:#f87171}
+.ct-b{background:#2a2010;color:#fbbf24}
+.ct-c{background:#1a2a1a;color:#4ade80}
+.ct-n{background:#1a1528;color:#5a4a7a}
+.minibar{background:#2d2440;border-radius:3px;height:3px;overflow:hidden;margin-bottom:8px}
+.mf{height:100%;background:#7c3aed;border-radius:3px}
+.cc-btn{width:100%;background:#1e1635;border:0.5px solid #3d2d5c;border-radius:7px;padding:5px;color:#a78bfa;font-size:11px;cursor:pointer;font-weight:500}
+.cc-btn:hover{background:#2d2440}
+.ob-board{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}
+.ob-col{background:#120f1e;border:0.5px solid #2d2440;border-radius:11px;padding:10px;min-width:210px;flex:1}
+.ch{margin-bottom:8px}
+.ch-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.ch-ttl{font-size:11px;font-weight:500;color:#c4b5fd;display:flex;align-items:center;gap:5px}
+.cdot{width:6px;height:6px;border-radius:50%}
+.ch-cnt{font-size:10px;background:#2d2440;color:#a78bfa;border-radius:20px;padding:2px 6px}
+.ch-desc{font-size:10px;color:#5a4a7a;margin-bottom:5px;line-height:1.4}
+.tip{background:#1e1a35;border-left:2px solid #7c3aed;border-radius:0 6px 6px 0;padding:5px 7px;margin-bottom:8px}
+.tip-lbl{font-size:9px;color:#7c3aed;font-weight:500;margin-bottom:2px;letter-spacing:.4px}
+.tip-txt{font-size:10px;color:#9d8fc0;line-height:1.45}
+.obc{background:#1a1528;border:0.5px solid #2d2440;border-radius:8px;padding:9px;margin-bottom:7px}
+.obc:hover{border-color:#5b3fa0}
+.obc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px}
+.obc-name{font-size:12px;font-weight:500;color:#e2d9f3}
+.obc-pct{font-size:9px;background:#2d2440;color:#a78bfa;border-radius:10px;padding:2px 6px}
+.chks{margin-bottom:5px}
+.chk{display:flex;align-items:flex-start;gap:5px;margin-bottom:4px;cursor:pointer}
+.chk input{margin-top:1px;accent-color:#7c3aed;cursor:pointer;flex-shrink:0;width:12px;height:12px}
+.chk-lbl{font-size:10px;color:#b0a0cc;line-height:1.4}
+.chk-lbl.done{text-decoration:line-through;color:#4a3a6a}
+.pbar{background:#2d2440;border-radius:3px;height:3px;overflow:hidden;margin-bottom:3px}
+.pf{height:100%;background:#7c3aed;border-radius:3px}
+.pct-lbl{font-size:10px;color:#6b5a8a;margin-bottom:5px}
+.cbtns{display:flex;gap:4px;flex-wrap:wrap}
+.empty{text-align:center;padding:14px 0;color:#3a2a5a;font-size:11px}
+.dhdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:0.5px solid #2d2440;flex-wrap:wrap}
+.dav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500}
+.dname{font-size:16px;font-weight:500;color:#fff}
+.dniche{font-size:11px;color:#6b5a8a;margin-top:1px}
+.dsts{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.dst{background:#1a1528;border:0.5px solid #2d2440;border-radius:7px;padding:5px 9px;text-align:center}
+.dsn{font-size:14px;font-weight:500}
+.dsl{font-size:10px;color:#6b5a8a}
+.kanban{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.kcol{background:#120f1e;border:0.5px solid #2d2440;border-radius:11px;padding:10px}
+.kh{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.kt{font-size:11px;font-weight:500;color:#c4b5fd;display:flex;align-items:center;gap:5px}
+.kc{font-size:10px;background:#2d2440;color:#a78bfa;border-radius:20px;padding:2px 6px}
+.tc{background:#1a1528;border:0.5px solid #2d2440;border-radius:8px;padding:8px 9px;margin-bottom:6px}
+.tc:hover{border-color:#5b3fa0}
+.tc-ttl{font-size:12px;color:#e2d9f3;font-weight:500;margin-bottom:5px;line-height:1.35}
+.tc-meta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
+.ttag{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:500}
+.tt-a{background:#1e1635;color:#a78bfa}
+.tt-o{background:#1a2a1a;color:#4ade80}
+.tt-r{background:#1a2035;color:#60a5fa}
+.tt-w{background:#1a3020;color:#34d399}
+.tt-c{background:#3a1a2a;color:#f472b6}
+.tp{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:500}
+.tp-a{background:#2a1a1a;color:#f87171}
+.tp-m{background:#2a2010;color:#fbbf24}
+.tp-b{background:#1a2a1a;color:#4ade80}
+.slbl{font-size:11px;color:#6b5a8a;margin-bottom:11px;padding-bottom:8px;border-bottom:0.5px solid #2d2440;display:flex;align-items:center;gap:5px}
+.mov{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.78);display:flex;align-items:center;justify-content:center;z-index:300;padding:16px}
+.mo{background:#1a1528;border:0.5px solid #3d2d5c;border-radius:14px;padding:20px;width:320px;max-width:100%}
+.mo-ttl{font-size:14px;font-weight:500;color:#e2d9f3;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.mo label{font-size:11px;color:#8b7aa8;display:block;margin-bottom:4px;margin-top:10px}
+.mo label:first-of-type{margin-top:0}
+.mo input,.mo select{width:100%;background:#0d0b14;border:0.5px solid #3d2d5c;border-radius:8px;padding:8px 10px;color:#e2d9f3;font-size:12px;outline:none;margin-bottom:0}
+.mo input:focus,.mo select:focus{border-color:#7c3aed}
+.mo input::placeholder{color:#5a4a7a}
+.cpicks{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.cp{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+.cp.sel{border-color:#fff}
+.mo-btns{display:flex;gap:8px;margin-top:16px}
+.mo-btns button{flex:1;padding:8px;border-radius:8px;font-size:12px;cursor:pointer;border:none;font-weight:500}
+.mok{background:#7c3aed;color:#fff}
+.mok:hover{background:#6d28d9}
+.mcancel{background:#2d2440;color:#a78bfa}
+.mdel{background:#2a1a1a;color:#f87171;border:0.5px solid #4a2020}
+</style>
+
+<h2 class="sr-only">Hub Cranium Digital — gestão completa de onboarding e clientes ativos</h2>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="bicon"><i class="ti ti-brain" aria-hidden="true"></i></div>
+      <div><div class="bname">Cranium Digital</div><div class="bsub">hub de gestão</div></div>
+    </div>
+    <div class="nav">
+      <button class="ntab active" onclick="goTab('dash')"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</button>
+      <button class="ntab" onclick="goTab('onboarding')"><i class="ti ti-rocket" aria-hidden="true"></i> Onboarding</button>
+      <button class="ntab" onclick="goTab('clientes')"><i class="ti ti-users" aria-hidden="true"></i> Clientes</button>
+    </div>
+  </div>
+
+  <div id="v-dash">
+    <div class="stats-row">
+      <div class="stat"><div class="sn" id="ds-cl">0</div><div class="sl">clientes ativos</div></div>
+      <div class="stat"><div class="sn" id="ds-ob">0</div><div class="sl">em onboarding</div></div>
+      <div class="stat"><div class="sn" id="ds-tk">0</div><div class="sl">tarefas abertas</div></div>
+      <div class="stat"><div class="sn" id="ds-urg">0</div><div class="sl">urgentes</div></div>
+    </div>
+    <div class="slbl"><i class="ti ti-rocket" aria-hidden="true"></i> Em onboarding agora</div>
+    <div class="clients-grid" id="dob-grid" style="margin-bottom:18px"></div>
+    <div class="slbl"><i class="ti ti-alert-circle" aria-hidden="true"></i> Clientes com tarefas urgentes</div>
+    <div class="clients-grid" id="durg-grid"></div>
+  </div>
+
+  <div id="v-onboarding" class="hidden">
+    <div class="stats-row">
+      <div class="stat"><div class="sn" id="ob-tot">0</div><div class="sl">em onboarding</div></div>
+      <div class="stat"><div class="sn" id="ob-lanc">0</div><div class="sl">lançados</div></div>
+      <div class="stat"><div class="sn" id="ob-pct">0%</div><div class="sl">conclusão</div></div>
+      <div class="stat"><div class="sn" id="ob-and">0</div><div class="sl">em andamento</div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn-p" onclick="openMod('new-ob')"><i class="ti ti-plus" aria-hidden="true"></i> Novo cliente</button>
+    </div>
+    <div class="ob-board" id="ob-board"></div>
+  </div>
+
+  <div id="v-clientes" class="hidden">
+    <div id="cl-list">
+      <div class="stats-row">
+        <div class="stat"><div class="sn" id="cl-tot">0</div><div class="sl">clientes</div></div>
+        <div class="stat"><div class="sn" id="cl-tk">0</div><div class="sl">tarefas abertas</div></div>
+        <div class="stat"><div class="sn" id="cl-urg">0</div><div class="sl">urgentes</div></div>
+        <div class="stat"><div class="sn" id="cl-done">0</div><div class="sl">concluídas</div></div>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="cl-search" placeholder="Buscar cliente..." oninput="renderClGrid()">
+        <select id="cl-filter" onchange="renderClGrid()">
+          <option value="">Todos os clientes</option>
+          <option value="alta">Com urgentes</option>
+        </select>
+        <button class="btn-p" onclick="openMod('new-cl')"><i class="ti ti-plus" aria-hidden="true"></i> Novo cliente</button>
+      </div>
+      <div class="clients-grid" id="cl-grid"></div>
+    </div>
+    <div id="cl-detail" class="hidden">
+      <div class="toolbar">
+        <button class="btn-s" onclick="closeDetail()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Todos os clientes</button>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="btn-e" onclick="openMod('edit-cl')"><i class="ti ti-edit" aria-hidden="true"></i> Editar</button>
+          <button class="btn-d" onclick="openMod('del-cl')"><i class="ti ti-trash" aria-hidden="true"></i> Remover</button>
+        </div>
+      </div>
+      <div class="dhdr" id="dhdr"></div>
+      <div class="toolbar">
+        <button class="btn-p" onclick="openMod('new-task')"><i class="ti ti-plus" aria-hidden="true"></i> Nova tarefa</button>
+      </div>
+      <div class="kanban" id="kanban"></div>
+    </div>
+  </div>
+</div>
+
+<div id="mod-root"></div>
+
+<script>
+const COLS=['#7c3aed','#ec4899','#3b82f6','#10b981','#f59e0b','#ef4444','#06b6d4','#f97316','#84cc16','#8b5cf6'];
+const TLABELS={anuncio:'Anúncio',otimizacao:'Otimização',relatorio:'Relatório',whatsapp:'WhatsApp',criativo:'Criativo'};
+const PLABELS={alta:'Urgente',media:'Média',baixa:'Baixa'};
+
+const OBC=[
+  {id:'contrato',label:'Contrato & pagamento',dot:'#f87171',desc:'Formalização jurídica e financeira do projeto',
+   tip:'Operações profissionais usam contratos digitais (DocuSign/Contraktor) com SLA definido e NF automática. Nunca inicie trabalho sem pagamento confirmado.',
+   checks:['Contrato assinado digitalmente','Pagamento confirmado e NF emitida','Pasta do cliente criada no Drive','Cliente adicionado ao CRM','Mensagem de boas-vindas enviada no WhatsApp','Reunião de kickoff agendada (máx 48h)']},
+  {id:'kickoff',label:'Kickoff estratégico',dot:'#fb923c',desc:'Alinhamento completo antes de qualquer execução',
+   tip:'Agências top realizam kickoff com pauta estruturada e enviam ata por escrito. Isso reduz retrabalho em 60% e gera autoridade desde o primeiro contato.',
+   checks:['Reunião de kickoff realizada (60–90 min)','Briefing completo preenchido (produto, avatar, concorrência)','Objetivo principal definido (lead, venda, WhatsApp)','Meta de CPA ou ROAS acordada com o cliente','Canais e frequência de comunicação definidos','Acesso ao Gerenciador de Negócios (BM) solicitado','Ata da reunião enviada ao cliente','Cronograma do onboarding compartilhado']},
+  {id:'tecnico',label:'Estrutura técnica',dot:'#fbbf24',desc:'Pixel, BM, rastreamento e WhatsApp configurados',
+   tip:'Grandes agências têm checklist técnico de 20+ itens antes de subir qualquer anúncio. Pixel mal configurado = dados errados = decisões erradas.',
+   checks:['Acesso ao BM confirmado e sem restrições','Conta de anúncio ativa','Pixel do Meta instalado e verificado','Evento de conversão principal configurado (Lead/Compra)','API de Conversões (CAPI) configurada — +30% de rastreamento','Domínio verificado no BM','WhatsApp Business conectado ao BM','Saudação automática no WhatsApp configurada','UTMs padronizadas e planilha de rastreamento criada','Acesso à página do Instagram e Facebook confirmado']},
+  {id:'estrategia',label:'Estratégia & plano de mídia',dot:'#c084fc',desc:'Plano de mídia escrito, aprovado e documentado',
+   tip:'As melhores operações separam estratégia de execução. Plano de mídia escrito e validado pelo cliente antes de qualquer criativo evita mudanças de rota no meio do mês.',
+   checks:['Análise de concorrência no Meta Ads Library realizada','Públicos-alvo mapeados (interesses, lookalike, remarketing)','Estrutura de funil definida (topo, meio e fundo)','Orçamento diário e mensal aprovado pelo cliente','Estratégia de lance definida (CBO ou ABO)','Plano de mídia documentado e enviado','Aprovação do plano de mídia recebida por escrito']},
+  {id:'criativos',label:'Criativos & copies',dot:'#f472b6',desc:'Materiais produzidos, revisados e aprovados',
+   tip:'Operações de alto volume testam mínimo 3 ângulos de copy e 3 formatos de criativo no lançamento. Criativo é o principal fator de performance em Meta Ads.',
+   checks:['Fotos e vídeos do cliente recebidos e organizados','Ângulos de comunicação definidos (dor, desejo, prova social)','Copies criadas — mínimo 3 variações por objetivo','Criativos estáticos produzidos (feed + stories)','Vídeo/reels adaptado para anúncio (se houver)','Copy para anúncio Click-to-WhatsApp criada','Aprovação dos criativos pelo cliente recebida','Materiais em formato correto (specs Meta Ads)']},
+  {id:'campanha',label:'Configuração de campanhas',dot:'#60a5fa',desc:'Estrutura montada, revisada e pronta para publicar',
+   tip:'Antes de publicar, grandes agências fazem revisão cruzada — outra pessoa confere tudo. Evita erros de segmentação, orçamento errado ou pixel não vinculado.',
+   checks:['Campanha de topo de funil criada','Campanha de conversão criada (lead/venda/WhatsApp)','Conjuntos de anúncios segmentados corretamente','Criativos subidos nos conjuntos corretos','Pixel vinculado a cada conjunto','Revisão final de orçamento, datas e objetivo','Print da estrutura enviado ao cliente','Aguardando aprovação final para publicar']},
+  {id:'lancamento',label:'Lançamento & ativação',dot:'#4ade80',desc:'Campanhas no ar — monitoramento e transição para ativo',
+   tip:'No dia do lançamento, monitore de hora em hora nas primeiras 4h. Zero entrega, CPM fora do padrão ou reprovação são sinais de alerta que exigem ação imediata.',
+   checks:['Aprovação final recebida do cliente','Campanhas publicadas e aprovadas pelo Meta','Print de confirmação enviado no WhatsApp','Primeiras 4 horas monitoradas ativamente','Relatório de 24h enviado ao cliente','Reunião de resultados agendada (D+7)','Cliente migrado para CRM de Clientes Ativos','Data de início e metas registradas na pasta']}
+];
+
+let obClients=[
+  {id:1,name:'Clínica Dra. Ana',col:'tecnico',checks:{}},
+  {id:2,name:'Loja Moda Fem.',col:'kickoff',checks:{}}
+];
+let clients=[
+  {id:1,name:'Academia FitPower',niche:'Academia',color:'#3b82f6'},
+  {id:2,name:'Consultório Dr. Pedro',niche:'Odontologia',color:'#10b981'},
+  {id:3,name:'Suplementos Max',niche:'E-commerce',color:'#f59e0b'},
+  {id:4,name:'Imobiliária Vista Mar',niche:'Imóveis',color:'#ef4444'},
+  {id:5,name:'Studio Hair',niche:'Beleza',color:'#ec4899'},
+  {id:6,name:'Advocacia Mendes',niche:'Jurídico',color:'#7c3aed'},
+];
+let tasks=[
+  {id:1,cid:1,title:'Subir campanha matrícula novembro',type:'anuncio',prio:'alta',status:'todo'},
+  {id:2,cid:1,title:'Criar copy para stories de depoimentos',type:'criativo',prio:'media',status:'doing'},
+  {id:3,cid:2,title:'Relatório quinzenal',type:'relatorio',prio:'baixa',status:'todo'},
+  {id:4,cid:3,title:'Escalar campanha ROAS 4x',type:'otimizacao',prio:'alta',status:'todo'},
+  {id:5,cid:4,title:'Novo criativo imóvel destaque',type:'criativo',prio:'media',status:'todo'},
+  {id:6,cid:5,title:'Campanha Black Friday',type:'anuncio',prio:'alta',status:'todo'},
+  {id:7,cid:6,title:'Ajustar público do conjunto',type:'otimizacao',prio:'media',status:'doing'},
+];
+
+let obNext=3,clNext=7,tkNext=8,curTab='dash',curClient=null,selColor=COLS[0];
+
+const ini=n=>n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+
+function goTab(t){
+  curTab=t;curClient=null;
+  ['dash','onboarding','clientes'].forEach(x=>document.getElementById('v-'+x).classList.toggle('hidden',x!==t));
+  document.querySelectorAll('.ntab').forEach((b,i)=>b.classList.toggle('active',['dash','onboarding','clientes'][i]===t));
+  if(t==='clientes'){
+    document.getElementById('cl-list').classList.remove('hidden');
+    document.getElementById('cl-detail').classList.add('hidden');
+  }
+  renderAll();
+}
+
+function openDetail(id){
+  curClient=clients.find(c=>c.id===id);
+  document.getElementById('cl-list').classList.add('hidden');
+  document.getElementById('cl-detail').classList.remove('hidden');
+  renderDetail();
+}
+
+function closeDetail(){
+  curClient=null;
+  document.getElementById('cl-detail').classList.add('hidden');
+  document.getElementById('cl-list').classList.remove('hidden');
+  renderClGrid();
+}
+
+function closeMod(){document.getElementById('mod-root').innerHTML='';}
+
+function openMod(type){
+  selColor=curClient?curClient.color:COLS[0];
+  const R=document.getElementById('mod-root');
+  let inner='';
+
+  if(type==='new-ob'){
+    inner=`<div class="mo-ttl"><i class="ti ti-rocket" aria-hidden="true"></i> Novo cliente — Onboarding</div>
+      <label>Nome do cliente / empresa</label>
+      <input type="text" id="m-ob-n" placeholder="Ex: Clínica Dr. João">
+      <div class="mo-btns"><button class="mcancel" onclick="closeMod()">Cancelar</button><button class="mok" onclick="saveOb()">Adicionar</button></div>`;
+  } else if(type==='new-cl'||type==='edit-cl'){
+    const isEdit=type==='edit-cl';
+    const c=isEdit?curClient:{};
+    const cpicks=COLS.map(col=>`<div class="cp${col===(isEdit?c.color:selColor)?' sel':''}" style="background:${col}" onclick="pickColor('${col}',this)"></div>`).join('');
+    inner=`<div class="mo-ttl"><i class="ti ti-user" aria-hidden="true"></i> ${isEdit?'Editar cliente':'Novo cliente ativo'}</div>
+      <label>Nome do cliente / empresa</label>
+      <input type="text" id="m-cl-n" placeholder="Ex: Academia FitPower" value="${isEdit?c.name:''}">
+      <label>Nicho / segmento</label>
+      <input type="text" id="m-cl-ni" placeholder="Ex: Academia, E-commerce, Clínica..." value="${isEdit?c.niche:''}">
+      <label>Cor de identificação</label>
+      <div class="cpicks" id="cpicks">${cpicks}</div>
+      <div class="mo-btns">
+        <button class="mcancel" onclick="closeMod()">Cancelar</button>
+        <button class="mok" onclick="${isEdit?'saveEditCl()':'saveNewCl()'}">       ${isEdit?'Salvar':'Adicionar'}</button>
+      </div>`;
+    if(isEdit)selColor=c.color;
+  } else if(type==='new-task'){
+    inner=`<div class="mo-ttl"><i class="ti ti-checklist" aria-hidden="true"></i> Nova tarefa — ${curClient?curClient.name:''}</div>
+      <label>Descrição da tarefa</label>
+      <input type="text" id="m-tk-t" placeholder="Ex: Subir campanha de leads...">
+      <label>Tipo</label>
+      <select id="m-tk-ty">
+        <option value="anuncio">Anúncio</option>
+        <option value="otimizacao">Otimização de campanha</option>
+        <option value="relatorio">Relatório / reunião</option>
+        <option value="whatsapp">Pedido via WhatsApp</option>
+        <option value="criativo">Criativo / copy</option>
+      </select>
+      <label>Prioridade</label>
+      <select id="m-tk-p">
+        <option value="alta">Urgente</option>
+        <option value="media">Média</option>
+        <option value="baixa">Baixa</option>
+      </select>
+      <div class="mo-btns"><button class="mcancel" onclick="closeMod()">Cancelar</button><button class="mok" onclick="saveTask()">Criar tarefa</button></div>`;
+  } else if(type==='del-cl'){
+    inner=`<div class="mo-ttl"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Remover cliente</div>
+      <p style="font-size:12px;color:#b0a0cc;line-height:1.6;margin-bottom:0">Tem certeza que deseja remover <strong style="color:#e2d9f3">${curClient?curClient.name:''}</strong>? Todas as tarefas serão excluídas.</p>
+      <div class="mo-btns"><button class="mcancel" onclick="closeMod()">Cancelar</button><button class="mdel" onclick="delCl()">Sim, remover</button></div>`;
+  }
+
+  R.innerHTML=`<div class="mov" onclick="if(event.target===this)closeMod()"><div class="mo">${inner}</div></div>`;
+  setTimeout(()=>{const f=R.querySelector('input[type=text]');if(f)f.focus();},40);
+}
+
+function pickColor(c,el){
+  selColor=c;
+  document.querySelectorAll('.cp').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function saveOb(){
+  const n=document.getElementById('m-ob-n')?.value.trim();
+  if(!n)return;
+  obClients.push({id:obNext++,name:n,col:'contrato',checks:{}});
+  closeMod();renderAll();
+}
+
+function saveNewCl(){
+  const n=document.getElementById('m-cl-n')?.value.trim();
+  if(!n)return;
+  clients.push({id:clNext++,name:n,niche:document.getElementById('m-cl-ni')?.value.trim()||'Geral',color:selColor});
+  closeMod();renderAll();
+}
+
+function saveEditCl(){
+  if(!curClient)return;
+  const n=document.getElementById('m-cl-n')?.value.trim();
+  if(!n)return;
+  curClient.name=n;
+  curClient.niche=document.getElementById('m-cl-ni')?.value.trim()||curClient.niche;
+  curClient.color=selColor;
+  const i=clients.findIndex(c=>c.id===curClient.id);
+  if(i>=0)clients[i]={...curClient};
+  closeMod();renderDetail();renderAll();
+}
+
+function saveTask(){
+  if(!curClient)return;
+  const t=document.getElementById('m-tk-t')?.value.trim();
+  if(!t)return;
+  tasks.push({id:tkNext++,cid:curClient.id,title:t,type:document.getElementById('m-tk-ty').value,prio:document.getElementById('m-tk-p').value,status:'todo'});
+  closeMod();renderDetail();renderAll();
+}
+
+function delCl(){
+  if(!curClient)return;
+  clients=clients.filter(c=>c.id!==curClient.id);
+  tasks=tasks.filter(t=>t.cid!==curClient.id);
+  closeMod();closeDetail();renderAll();
+}
+
+function moveOb(id,dir){
+  const c=obClients.find(c=>c.id===id);
+  const i=OBC.findIndex(col=>col.id===c.col)+dir;
+  if(i>=0&&i<OBC.length){c.col=OBC[i].id;c.checks={};}
+  renderAll();
+}
+
+function delOb(id){obClients=obClients.filter(c=>c.id!==id);renderAll();}
+
+function togChk(cid,idx){
+  const c=obClients.find(c=>c.id===cid);
+  if(!c.checks)c.checks={};
+  c.checks[idx]=!c.checks[idx];
+  renderAll();
+}
+
+function moveTk(id,dir){
+  const t=tasks.find(t=>t.id===id);
+  const fl=['todo','doing','done'];
+  const i=fl.indexOf(t.status)+dir;
+  if(i>=0&&i<3)t.status=fl[i];
+  renderDetail();renderDash();
+}
+
+function delTk(id){tasks=tasks.filter(t=>t.id!==id);renderDetail();renderDash();}
+
+function renderObBoard(){
+  const board=document.getElementById('ob-board');
+  if(!board)return;
+  board.innerHTML=OBC.map((col,ci)=>{
+    const cards=obClients.filter(c=>c.col===col.id);
+    const items=cards.length?cards.map(card=>{
+      const done=col.checks.filter((_,i)=>card.checks&&card.checks[i]).length;
+      const total=col.checks.length;
+      const pct=total?Math.round(done/total*100):0;
+      return`<div class="obc">
+        <div class="obc-top">
+          <div class="obc-name">${card.name}</div>
+          <span class="obc-pct">${pct}%</span>
+        </div>
+        <div class="chks">${col.checks.map((ch,i)=>`
+          <div class="chk" onclick="togChk(${card.id},${i})">
+            <input type="checkbox" ${card.checks&&card.checks[i]?'checked':''} onclick="event.stopPropagation();togChk(${card.id},${i})">
+            <span class="chk-lbl ${card.checks&&card.checks[i]?'done':''}">${ch}</span>
+          </div>`).join('')}</div>
+        <div class="pbar"><div class="pf" style="width:${pct}%"></div></div>
+        <div class="pct-lbl">${done} de ${total} itens</div>
+        <div class="cbtns">
+          ${ci>0?`<button class="btn-mv" onclick="moveOb(${card.id},-1)">← Voltar</button>`:''}
+          ${ci<OBC.length-1?`<button class="btn-mv" onclick="moveOb(${card.id},1)">Avançar →</button>`:''}
+          <button class="btn-d" onclick="delOb(${card.id})"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>`;}).join(''):`<div class="empty">nenhum cliente</div>`;
+    return`<div class="ob-col">
+      <div class="ch">
+        <div class="ch-row">
+          <div class="ch-ttl"><span class="cdot" style="background:${col.dot}"></span>${col.label}</div>
+          <span class="ch-cnt">${cards.length}</span>
+        </div>
+        <div class="ch-desc">${col.desc}</div>
+        <div class="tip"><div class="tip-lbl"><i class="ti ti-bulb" aria-hidden="true"></i> dica pro</div><div class="tip-txt">${col.tip}</div></div>
+      </div>${items}
+    </div>`;
+  }).join('');
+  const tot=obClients.length,lanc=obClients.filter(c=>c.col==='lancamento').length;
+  if(document.getElementById('ob-tot')){
+    document.getElementById('ob-tot').textContent=tot;
+    document.getElementById('ob-lanc').textContent=lanc;
+    document.getElementById('ob-pct').textContent=tot?Math.round(lanc/tot*100)+'%':'0%';
+    document.getElementById('ob-and').textContent=tot-lanc;
+  }
+}
+
+function renderClGrid(){
+  const grid=document.getElementById('cl-grid');
+  if(!grid)return;
+  const q=(document.getElementById('cl-search')?.value||'').toLowerCase();
+  const fp=document.getElementById('cl-filter')?.value||'';
+  let list=clients.filter(c=>c.name.toLowerCase().includes(q)||c.niche.toLowerCase().includes(q));
+  if(fp==='alta')list=list.filter(c=>tasks.some(t=>t.cid===c.id&&t.prio==='alta'&&t.status!=='done'));
+  grid.innerHTML=list.map(c=>{
+    const ct=tasks.filter(t=>t.cid===c.id);
+    const todo=ct.filter(t=>t.status==='todo').length;
+    const doing=ct.filter(t=>t.status==='doing').length;
+    const done=ct.filter(t=>t.status==='done').length;
+    const pct=ct.length?Math.round(done/ct.length*100):0;
+    const urg=ct.filter(t=>t.prio==='alta'&&t.status!=='done').length;
+    return`<div class="cc">
+      <div class="cc-top">
+        <div class="cav" style="background:${c.color}22;color:${c.color}">${ini(c.name)}</div>
+        <div class="cc-acts">
+          <button class="btn-e" onclick="curClient=clients.find(x=>x.id===${c.id});openMod('edit-cl')" title="Editar cliente"><i class="ti ti-edit" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="cname">${c.name}</div>
+      <div class="cniche">${c.niche}</div>
+      <div class="ctags">
+        ${todo?`<span class="ct ct-a">${todo} a fazer</span>`:''}
+        ${doing?`<span class="ct ct-b">${doing} fazendo</span>`:''}
+        ${done?`<span class="ct ct-c">${done} feitas</span>`:''}
+        ${!ct.length?`<span class="ct ct-n">sem tarefas</span>`:''}
+        ${urg?`<span class="ct ct-a"><i class="ti ti-alert-circle" aria-hidden="true"></i> ${urg} urgente${urg>1?'s':''}</span>`:''}
+      </div>
+      <div class="minibar"><div class="mf" style="width:${pct}%"></div></div>
+      <button class="cc-btn" onclick="openDetail(${c.id})"><i class="ti ti-layout-kanban" aria-hidden="true"></i> Abrir tarefas</button>
+    </div>`;
+  }).join('');
+  const open=tasks.filter(t=>t.status!=='done');
+  if(document.getElementById('cl-tot')){
+    document.getElementById('cl-tot').textContent=clients.length;
+    document.getElementById('cl-tk').textContent=open.length;
+    document.getElementById('cl-urg').textContent=open.filter(t=>t.prio==='alta').length;
+    document.getElementById('cl-done').textContent=tasks.filter(t=>t.status==='done').length;
+  }
+}
+
+function renderDetail(){
+  const c=curClient;if(!c)return;
+  const ct=tasks.filter(t=>t.cid===c.id);
+  const todo=ct.filter(t=>t.status==='todo').length;
+  const doing=ct.filter(t=>t.status==='doing').length;
+  const done=ct.filter(t=>t.status==='done').length;
+  document.getElementById('dhdr').innerHTML=`
+    <div class="dav" style="background:${c.color}22;color:${c.color}">${ini(c.name)}</div>
+    <div><div class="dname">${c.name}</div><div class="dniche">${c.niche}</div></div>
+    <div class="dsts">
+      <div class="dst"><div class="dsn" style="color:#f87171">${todo}</div><div class="dsl">a fazer</div></div>
+      <div class="dst"><div class="dsn" style="color:#fbbf24">${doing}</div><div class="dsl">fazendo</div></div>
+      <div class="dst"><div class="dsn" style="color:#4ade80">${done}</div><div class="dsl">feitas</div></div>
+    </div>`;
+  const kcols=[{id:'todo',label:'A fazer',dot:'#f87171'},{id:'doing',label:'Em andamento',dot:'#fbbf24'},{id:'done',label:'Concluído',dot:'#4ade80'}];
+  document.getElementById('kanban').innerHTML=kcols.map(col=>{
+    const list=ct.filter(t=>t.status===col.id);
+    return`<div class="kcol">
+      <div class="kh"><div class="kt"><span class="cdot" style="background:${col.dot}"></span>${col.label}</div><span class="kc">${list.length}</span></div>
+      ${list.length?list.map(t=>`
+        <div class="tc">
+          <div class="tc-ttl">${t.title}</div>
+          <div class="tc-meta">
+            <span class="ttag tt-${t.type[0]}">${TLABELS[t.type]}</span>
+            <span class="tp tp-${t.prio[0]}">${PLABELS[t.prio]}</span>
+          </div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">
+            ${col.id!=='todo'?`<button class="btn-mv" onclick="moveTk(${t.id},-1)">← Voltar</button>`:''}
+            ${col.id!=='done'?`<button class="btn-mv" onclick="moveTk(${t.id},1)">${col.id==='todo'?'Iniciar →':'Concluir →'}</button>`:''}
+            <button class="btn-d" onclick="delTk(${t.id})"><i class="ti ti-trash" aria-hidden="true"></i></button>
+          </div>
+        </div>`).join(''):`<div class="empty">nenhuma tarefa</div>`}
+    </div>`;
+  }).join('');
+}
+
+function renderDash(){
+  const og=document.getElementById('dob-grid');
+  const ug=document.getElementById('durg-grid');
+  if(og){
+    og.innerHTML=obClients.length?obClients.map(c=>{
+      const col=OBC.find(o=>o.id===c.col);
+      const chks=col?col.checks:[];
+      const done=chks.filter((_,i)=>c.checks&&c.checks[i]).length;
+      const pct=chks.length?Math.round(done/chks.length*100):0;
+      return`<div class="cc" style="cursor:pointer" onclick="goTab('onboarding')">
+        <div class="cav" style="background:#7c3aed22;color:#7c3aed;margin-bottom:8px">${ini(c.name)}</div>
+        <div class="cname">${c.name}</div>
+        <div class="cniche">${col?col.label:'—'}</div>
+        <div class="ctags"><span class="ct" style="background:#2d2440;color:#a78bfa">${pct}% concluído</span></div>
+        <div class="minibar" style="margin-top:6px"><div class="mf" style="width:${pct}%"></div></div>
+      </div>`;}).join(''):`<div style="color:#3a2a5a;font-size:12px;padding:8px 0;grid-column:1/-1">Nenhum cliente em onboarding. <button class="btn-p" style="display:inline-flex;margin-top:8px" onclick="goTab('onboarding')"><i class="ti ti-plus" aria-hidden="true"></i> Adicionar</button></div>`;
+  }
+  if(ug){
+    const urgCl=clients.filter(c=>tasks.some(t=>t.cid===c.id&&t.prio==='alta'&&t.status!=='done'));
+    ug.innerHTML=urgCl.length?urgCl.map(c=>{
+      const urg=tasks.filter(t=>t.cid===c.id&&t.prio==='alta'&&t.status!=='done').length;
+      return`<div class="cc" style="cursor:pointer" onclick="goTab('clientes');setTimeout(()=>openDetail(${c.id}),60)">
+        <div class="cav" style="background:${c.color}22;color:${c.color};margin-bottom:8px">${ini(c.name)}</div>
+        <div class="cname">${c.name}</div>
+        <div class="cniche">${c.niche}</div>
+        <div class="ctags"><span class="ct ct-a"><i class="ti ti-alert-circle" aria-hidden="true"></i> ${urg} urgente${urg>1?'s':''}</span></div>
+      </div>`;}).join(''):`<div style="color:#3a2a5a;font-size:12px;padding:8px 0;grid-column:1/-1">Nenhuma tarefa urgente — tudo sob controle!</div>`;
+  }
+  if(document.getElementById('ds-cl')){
+    const open=tasks.filter(t=>t.status!=='done');
+    document.getElementById('ds-cl').textContent=clients.length;
+    document.getElementById('ds-ob').textContent=obClients.length;
+    document.getElementById('ds-tk').textContent=open.length;
+    document.getElementById('ds-urg').textContent=open.filter(t=>t.prio==='alta').length;
+  }
+}
+
+function renderAll(){renderObBoard();renderClGrid();renderDash();if(curClient)renderDetail();}
+renderAll();
+</script>
