@@ -283,14 +283,30 @@ body.locked{overflow:hidden}
 .month-switcher button:hover{background:rgba(124,58,237,.15);color:#fff}
 .month-switcher .lbl{font-family:var(--fh);font-size:16px;color:#fff;padding:0 8px;min-width:140px;text-align:center;text-transform:capitalize}
 
-.mrr-chart{display:flex;align-items:flex-end;gap:10px;height:160px;padding:14px 0;margin-bottom:18px;border-bottom:1px solid var(--border);position:relative}
-.mrr-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
-.mrr-bar{width:100%;max-width:46px;background:linear-gradient(180deg,var(--pink),var(--purple));border-radius:6px 6px 0 0;transition:all .3s;cursor:pointer;position:relative;min-height:2px}
-.mrr-bar.future{background:repeating-linear-gradient(45deg,rgba(124,58,237,.15),rgba(124,58,237,.15) 4px,transparent 4px,transparent 8px);border:1px dashed var(--border-purple)}
-.mrr-bar.current{background:linear-gradient(180deg,#ff3da6,#7c3aed);box-shadow:0 0 14px rgba(255,61,166,.5)}
-.mrr-bar-val{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:10.5px;color:#fff;font-weight:600;white-space:nowrap;opacity:0;transition:opacity .15s}
-.mrr-bar-wrap:hover .mrr-bar-val{opacity:1}
-.mrr-bar-lbl{font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.mrr-chart{display:flex;align-items:flex-end;gap:14px;height:280px;padding:40px 14px 14px;margin-bottom:0;position:relative}
+.mrr-chart::before,.mrr-chart::after{content:"";position:absolute;left:14px;right:14px;height:1px;background:rgba(255,255,255,.04)}
+.mrr-chart::before{top:40px}
+.mrr-chart::after{top:50%}
+.mrr-y-grid{position:absolute;left:0;right:0;top:40px;bottom:14px;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between}
+.mrr-y-line{height:1px;background:rgba(255,255,255,.04);position:relative}
+.mrr-y-line span{position:absolute;left:-6px;top:-7px;font-size:10px;color:var(--text3);transform:translateX(-100%);white-space:nowrap;background:var(--surface);padding:0 4px}
+.mrr-chart-wrap{position:relative;padding-left:60px}
+.mrr-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;position:relative;height:100%;justify-content:flex-end}
+.mrr-bar{width:100%;max-width:54px;background:linear-gradient(180deg,#ff5fb8,#7c3aed);border-radius:8px 8px 0 0;transition:all .35s cubic-bezier(.4,0,.2,1);cursor:pointer;position:relative;min-height:3px;box-shadow:0 -2px 14px rgba(124,58,237,.3)}
+.mrr-bar:hover{filter:brightness(1.15);transform:translateY(-3px)}
+.mrr-bar.future{background:repeating-linear-gradient(45deg,rgba(124,58,237,.22),rgba(124,58,237,.22) 5px,rgba(124,58,237,.08) 5px,rgba(124,58,237,.08) 10px);border:1.5px dashed rgba(159,94,255,.5);box-shadow:none}
+.mrr-bar.current{background:linear-gradient(180deg,#ff3da6 0%,#9f5eff 100%);box-shadow:0 -2px 22px rgba(255,61,166,.55),0 0 30px rgba(124,58,237,.3)}
+.mrr-bar-val{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:11px;color:#fff;font-weight:700;white-space:nowrap;font-family:var(--fh);letter-spacing:-.2px;background:rgba(20,15,35,.95);padding:3px 7px;border-radius:6px;border:.5px solid var(--border-purple);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.mrr-bar.current .mrr-bar-val{background:linear-gradient(135deg,rgba(255,61,166,.95),rgba(124,58,237,.95));border-color:rgba(255,255,255,.2)}
+.mrr-bar.future .mrr-bar-val{color:var(--text2);background:rgba(20,15,35,.9)}
+.mrr-bar-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+.mrr-bar.current + .mrr-bar-lbl,.mrr-bar-wrap:has(.mrr-bar.current) .mrr-bar-lbl{color:var(--pink);font-weight:700}
+.mrr-legend{display:flex;gap:18px;justify-content:center;padding:14px 0 0;border-top:1px solid var(--border);margin-top:14px;flex-wrap:wrap}
+.mrr-legend-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2)}
+.mrr-legend-sw{width:16px;height:10px;border-radius:3px}
+.mrr-legend-sw.past{background:linear-gradient(180deg,#ff5fb8,#7c3aed)}
+.mrr-legend-sw.curr{background:linear-gradient(180deg,#ff3da6,#9f5eff);box-shadow:0 0 8px rgba(255,61,166,.4)}
+.mrr-legend-sw.fut{background:repeating-linear-gradient(45deg,rgba(124,58,237,.22),rgba(124,58,237,.22) 3px,rgba(124,58,237,.08) 3px,rgba(124,58,237,.08) 6px);border:1px dashed rgba(159,94,255,.5)}
 
 .menu-btn{display:none;position:fixed;top:14px;left:14px;width:42px;height:42px;border-radius:10px;background:rgba(20,15,35,.9);backdrop-filter:blur(20px);border:1px solid var(--border);color:#fff;z-index:60;align-items:center;justify-content:center}
 .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:49;backdrop-filter:blur(4px)}
@@ -1200,17 +1216,35 @@ function renderMrrChart(){
     let v=m.isFuture?cur:mrrAt(m.ym);
     return {...m,value:v};
   });
-  const max=Math.max(...data.map(d=>d.value),1000);
-  $('mrr-chart').innerHTML=data.map(d=>{
+  // Escala arredondada (top um pouco acima do max para sobra)
+  const rawMax=Math.max(...data.map(d=>d.value),1000);
+  const step=Math.pow(10,Math.floor(Math.log10(rawMax)));
+  const max=Math.ceil(rawMax*1.15/step)*step;
+  // Escala lateral com 4 níveis
+  const levels=[max, max*0.75, max*0.5, max*0.25, 0];
+  const yGrid=`<div class="mrr-y-grid">${levels.map(v=>`<div class="mrr-y-line"><span>${fmt(Math.round(v))}</span></div>`).join('')}</div>`;
+  const bars=data.map(d=>{
     const pct=(d.value/max)*100;
     const cls=d.isCurrent?'current':(d.isFuture?'future':'');
     return `<div class="mrr-bar-wrap">
-      <div class="mrr-bar ${cls}" style="height:${Math.max(2,pct)}%">
+      <div class="mrr-bar ${cls}" style="height:${Math.max(3,pct)}%">
         <span class="mrr-bar-val">${fmt(d.value)}</span>
       </div>
       <div class="mrr-bar-lbl">${d.label}</div>
     </div>`;
   }).join('');
+  const legend=`<div class="mrr-legend">
+    <div class="mrr-legend-item"><span class="mrr-legend-sw past"></span> Meses passados</div>
+    <div class="mrr-legend-item"><span class="mrr-legend-sw curr"></span> Mês atual</div>
+    <div class="mrr-legend-item"><span class="mrr-legend-sw fut"></span> Projeção</div>
+  </div>`;
+  $('mrr-chart').innerHTML=yGrid+bars;
+  // legenda fica fora do container do gráfico mas dentro do card
+  const chartEl=$('mrr-chart');
+  if(chartEl.nextElementSibling&&chartEl.nextElementSibling.classList.contains('mrr-legend')){
+    chartEl.nextElementSibling.remove();
+  }
+  chartEl.insertAdjacentHTML('afterend',legend);
 }
 
 function renderMrrTable(){
