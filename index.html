@@ -355,8 +355,8 @@ body.locked{overflow:hidden}
     </nav>
     <div class="sb-bottom">
       <div class="sb-user">
-        <div class="av">R</div>
-        <div class="meta"><div class="name">Rafael</div><div class="role">administrador</div></div>
+        <div class="av">B</div>
+        <div class="meta"><div class="name">Bruno</div><div class="role">administrador</div></div>
         <button class="out" onclick="logout()" title="Sair"><i class="ti ti-logout"></i></button>
       </div>
     </div>
@@ -364,7 +364,7 @@ body.locked{overflow:hidden}
 
   <main class="main">
     <section class="view active" id="v-home">
-      <div class="ph"><div><h1 id="home-greet">Bom dia, Rafael</h1><div class="sub" id="home-date"></div></div></div>
+      <div class="ph"><div><h1 id="home-greet">Bom dia, Bruno</h1><div class="sub" id="home-date"></div></div></div>
       <div class="kpis">
         <div class="kpi pink"><div class="lbl"><i class="ti ti-currency-real"></i> Receita mensal</div><div class="val" id="k-mrr">R$0</div><div class="delta" id="k-mrr-d">— clientes ativos</div></div>
         <div class="kpi green"><div class="lbl"><i class="ti ti-trending-up"></i> Lucro do mês</div><div class="val" id="k-profit">R$0</div><div class="delta" id="k-profit-d">receita - despesas</div></div>
@@ -527,7 +527,7 @@ function addMonths(ym,n){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
 }
 
-const AUTH={user:"rafael",pass:"Cranium@Hub2026!"};
+const AUTH={user:"bruno",pass:"Cranium@Hub2026!"};
 function doLogin(e){
   e.preventDefault();
   const u=$('lg-u').value.trim(),p=$('lg-p').value;
@@ -1088,7 +1088,7 @@ function renderHome(){
   $('home-date').textContent=fdate.charAt(0).toUpperCase()+fdate.slice(1);
   const hora=today.getHours();
   const saudacao=hora<12?'Bom dia':hora<18?'Boa tarde':'Boa noite';
-  $('home-greet').textContent=`${saudacao}, Rafael`;
+  $('home-greet').textContent=`${saudacao}, Bruno`;
 
   const activeClients=state.clients.filter(c=>c.status!=='cancelado');
   const mrr=activeClients.reduce((a,c)=>a+(c.monthly||0),0);
